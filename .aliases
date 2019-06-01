@@ -1,0 +1,97 @@
+# DNG
+alias arc='duoconnect -arc -relay phab.duosec.org arc'
+
+# Editing config files
+alias .a='. /root/config/.aliases'
+alias ..a='/usr/bin/vi /root/config/.aliases; .a'
+
+alias .b='. /root/config/.bashrc'
+alias ..b='/usr/bin/vi /root/config/.bashrc; .b'
+
+alias .f='. ~/.functions'
+alias ..f='vi ~/.functions; .f'
+
+alias .z='. ~/.zshrc'
+alias ..z='/usr/bin/vi ~/.zshrc; .z'
+
+alias .g='. ~/.gitconfig'
+alias ..g='vi ~/.gitconfig; .z'
+
+alias .t='tmux source-file ~/.tmux.conf \; display-message "~/.tmux.conf reloaded"'
+alias ..t='vi ~/.tmux.conf; .t'
+
+alias ..v='vim /root/config/.vimrc'
+
+## Tmux Shortcuts
+alias t='tat'
+alias 'tls'='tmux list-sessions'
+
+
+## Git Shortcuts
+# alias git='hub'
+alias g='git'
+alias glg='g lg | h; echo'
+alias gls='clear; pwd; echo; ls; echo; git s'
+alias gl='gls && echo && glg'
+alias ga='g a'
+alias gap='g a -p'
+alias gpa='gap' # For typos
+alias gk='git push'
+alias gj='git pull'
+alias gjr='git pull origin --rebase'
+alias gc='git commit'
+alias gi='vi .gitignore'
+alias gw='g c -a -m "wip"'
+alias gca='g commit --amend'
+alias gh='hub browse'
+alias gstats='echo \
+              +$(g d $(g merge-base HEAD master) | ag "^\+" | wc -l | sed -e "s/^[ \t]*//"),\
+              -$(g d $(g merge-base HEAD master) | ag "^\-" | wc -l | sed -e "s/^[ \t]*//")'
+alias gs='g status'
+alias gd='g diff'
+alias gds='g diff --stat=$COLUMNS'
+alias ga='g add'
+alias gcop='g checkout -p'
+alias gap='g add -p'
+alias gap='g add -p'
+alias gmod="gs | ag modified | awk '{print $2}'"
+
+alias vim='vim -u /root/config/.vimrc'
+alias vi='vim'
+
+alias tp='cd ~/src/trustedpath'
+alias tpi='tp; cd trustedpath-itest'
+alias simple='cd /Users/mwright/src/duo_python/demos/simple; vi duo.conf; PYTHONPATH=/Users/mwright/src/duo_python python server.py'
+alias vu='vagrant up'
+alias vssh='tp; vu; vagrant ssh $flavor'
+alias vs='tp; vagrant ssh'
+
+alias squish='git status; git commit -a --amend -C HEAD'
+alias wip="git commit -a -m '$(git branch | grep \* | cut -d ' ' -f2)'"
+
+# ag aliases
+alias agl="ag -l"
+alias agg="ag -g"
+alias agq="ag -Q"
+
+alias list='tp; clear; echo "=====\033[1;31mTasks\033[0m====="; arc tasks; echo "\n\n=====\033[1;31mList\033[0m====="; arc list;'
+alias tasks='tp; clear; arc tasks'
+alias close='arc close'
+alias browse='arc browse'
+alias feature='arc feature'
+alias stash='git stash'
+
+## TP Aliases
+alias fedramp_on="vagrant ssh main -c 'sed -in /^fedramp_level/s/none/moderate/ /opt/duo/etc/trustedpath.toml; grep fedramp_level /opt/duo/etc/trustedpath.toml; sc restart frontend:adminserv;'"
+alias fedramp_off="vagrant ssh main -c 'sed -in /^fedramp_level/s/moderate/none/ /opt/duo/etc/trustedpath.toml; grep fedramp_level /opt/duo/etc/trustedpath.toml; sc restart frontend:adminserv;'"
+alias admin_login_new="vagrant ssh main -c 'sed -in /^admin_login_version/s/1/2/ /opt/duo/etc/trustedpath.toml; grep admin_login_version /opt/duo/etc/trustedpath.toml; sc restart frontend:adminserv;'"
+alias admin_login_old="vagrant ssh main -c 'sed -in /^admin_login_version/s/2/1/ /opt/duo/etc/trustedpath.toml; grep admin_login_version /opt/duo/etc/trustedpath.toml; sc restart frontend:adminserv;'"
+alias fix_vagrant_time="vagrant ssh main -c 'sudo ntpdate -s time.nist.gov'"
+alias update="git checkout master && git pull"
+alias rebase="git checkout $branch && git rebase -i $parent"
+alias preview="git checkout $branch; arc diff $base --preview --browse"
+alias upload_plan_changes="git checkout $branch; arc diff --update $revision $base --browse --plan-changes"
+alias land="git checkout $base; arc land $branch --onto $base --revision $revision && browse $branch"
+
+## Start
+alias start='vim /root/vimwiki/Start.md'
